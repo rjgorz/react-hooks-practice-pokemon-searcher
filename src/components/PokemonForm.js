@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Form } from "semantic-ui-react";
 
-function PokemonForm({ handleSubmit, formControl }) {
-  console.log("Form rendered...");
+function PokemonForm({ handleSubmit }) {
   const initialFormValues = {
     name: "",
     hp: 0,
@@ -31,7 +30,7 @@ function PokemonForm({ handleSubmit, formControl }) {
     <div>
       <h3>Add a Pokemon!</h3>
       <Form onSubmit={(e) => {
-        handleSubmit(e, newPokemon, formControl);
+        handleSubmit(e, newPokemon);
         setFormData(initialFormValues);
       }}>
         <Form.Group widths="equal">

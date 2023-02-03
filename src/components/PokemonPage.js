@@ -7,15 +7,14 @@ import { Container } from "semantic-ui-react";
 function PokemonPage() {
   const [pokeCollection, setPokeCollection] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [formControl, setFormControl] = useState(false);
 
   useEffect(() => {
     fetch('http://localhost:3001/pokemon')
     .then(r => r.json())
     .then(pokemon => setPokeCollection(pokemon));
-  }, [formControl]);
+  }, []);
 
-  function handleSubmit(e, newPokemon, formControl) {
+  function handleSubmit(e, newPokemon) {
     e.preventDefault();
 
     fetch('http://localhost:3001/pokemon', {
@@ -23,9 +22,8 @@ function PokemonPage() {
     headers: { 'Content-Type': 'application/json', 'Accepts': 'application/json' },
     body: JSON.stringify(newPokemon),
     })
-    .then(r => setFormControl(!formControl))
-
-    
+    .then(r => r.json())
+    .then(newPokemon => setPokeCollection([...pokeCollection, newPokemon]))
   }
 
   function handleSearch(e) {
@@ -43,7 +41,7 @@ function PokemonPage() {
     <Container>
       <h1>Pokemon Searcher</h1>
       <br />
-      <PokemonForm handleSubmit={handleSubmit} formControl={formControl} />
+      <PokemonForm handleSubmit={handleSubmit} />
       <br />
       <Search handleSearch={handleSearch}/>
       <br />
